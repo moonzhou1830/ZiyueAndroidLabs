@@ -5,5 +5,6 @@
     <string name="button_message">我是一个按键</string>
     <string name="editmessage">I\'m an EditText</string>
     <string name="hinttext">Write something here</string>
+    <string name="buttonQuestion">Do ou drink coffee?</string>
 
 </resources>
