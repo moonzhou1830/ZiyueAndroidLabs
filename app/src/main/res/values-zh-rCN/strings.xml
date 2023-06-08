@@ -3,4 +3,7 @@
     <string name="app_name">Ziyue\'s Android Labs</string>
     <string name="hello_message">世界你好</string>
     <string name="button_message">我是一个按键</string>
+    <string name="button1">按键1</string>
+    <string name="button2">按键2</string>
+    <string name="button3">按键3</string>
 </resources>
