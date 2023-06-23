@@ -8,6 +8,7 @@
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="Android_TV_1080p_Edited_API_27" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_2_API_27" value="120" />
                   <entry key="Tests" value="360" />
