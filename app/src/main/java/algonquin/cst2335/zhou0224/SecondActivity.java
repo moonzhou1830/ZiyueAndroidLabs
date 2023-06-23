@@ -10,6 +10,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -98,10 +100,25 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        String phoneNumber = prefs.getString("phoneNumber", "");
+        binding.editTextPhone.setText(phoneNumber);
+
         binding.goBackButton.setOnClickListener((v) -> {
             //opposite of startActivity()
             finish(); //go back to previous
         });
 
+    }
+
+    protected void onPause() {
+        super.onPause();
+        // Save the entered phone number
+        EditText phoneNumberEditText = binding.editTextPhone;
+        String phoneNumber = phoneNumberEditText.getText().toString(); // Get the phone number from EditText
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("phoneNumber", phoneNumber);
+        editor.apply();
     }
 }
