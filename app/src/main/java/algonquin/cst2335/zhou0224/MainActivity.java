@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
             String password = et.getText().toString();
 
             boolean isPasswordValid = checkPasswordComplexity(password);
-            TextView textView = findViewById(R.id.textView);
+
             if (isPasswordValid) {
-                textView.setText("Your password meets the requirements");
+                tv.setText("Your password meets the requirements");
             } else {
-                textView.setText("You shall not pass!");
+                tv.setText("You shall not pass!");
             }
         });
     }

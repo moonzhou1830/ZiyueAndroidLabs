@@ -28,6 +28,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
@@ -59,7 +60,7 @@ public class MainActivityTest {
     }
 
     @Test
-    public void testFindMissingUpperCase(){
+  public void testFindMissingUpperCase(){
         //find the view
         ViewInteraction appCompatEditText = onView( withId(R.id.editText));
         //type in password123#
@@ -75,6 +76,7 @@ public class MainActivityTest {
         //check the text
         textView.check(matches(withText("You shall not pass!")));
     }
+
 
     @Test
     public void testFindMissingLowerCase() {
