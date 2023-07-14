@@ -3,6 +3,8 @@ package algonquin.cst2335.zhou0224;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -44,6 +46,22 @@ public class ChatRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
         messages = chatModel.messages.getValue();
+
+            MessagesDetailsFragment chatFragment = new MessagesDetailsFragment(messages);
+            //chatFragment.displayMessage();
+            FragmentManager fMgr = getSupportFragmentManager();
+            FragmentTransaction tx = fMgr.beginTransaction();
+            tx.replace(R.id.theMessage,chatFragment);
+            tx.addToBackStack("Back to last message");
+            tx.commit();//// This line actually loads the fragment into the specified FrameLayout
+
+            //getSupportFragmentManager().beginTransaction().add(R.id.messagesFrame,chatFragment).commit();
+            //getSupportFragmentManager().beginTransaction().replace(R.id.messagesFrame,chatFragment).commit();
+            //getSupportFragmentManager().beginTransaction().addToBackStack("Back to last message");
+            //tx.remove();
+
+        };
+
 
         //access the database:
         db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class, "MyChatMessageDatabase").build();
@@ -111,8 +129,6 @@ public class ChatRoom extends AppCompatActivity {
                     ReceiveMessageBinding rbinding = ReceiveMessageBinding.inflate(getLayoutInflater(), parent, false);
                     return new MyRowHolder(rbinding.getRoot());
                 }
-
-
             }
 
             @Override
@@ -136,7 +152,6 @@ public class ChatRoom extends AppCompatActivity {
                 else{
                     return 1;
                 }
-
             }
         });
         binding.recycleView.setLayoutManager(new LinearLayoutManager(this));
@@ -148,7 +163,12 @@ public class ChatRoom extends AppCompatActivity {
         public MyRowHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(click ->{
+                int position = getAbsoluteAdapterPosition();
+                ChatMessage selected = messages.get(position);
 
+                chatModel.selectedMessage.postValue(selected);
+
+/*
                 AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
                 builder.setMessage("Do you want to delete the message:" + messageText.getText())
                        .setTitle("Question:")
@@ -180,7 +200,7 @@ public class ChatRoom extends AppCompatActivity {
                             })
                             .show();
                 }))
-                .create().show();
+                .create().show(); */
             });
             messageText = itemView.findViewById(R.id.theMessage);
             timeText = itemView.findViewById(R.id.theTime);
