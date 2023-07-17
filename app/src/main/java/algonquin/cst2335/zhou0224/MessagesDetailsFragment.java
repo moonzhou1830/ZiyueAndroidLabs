@@ -14,7 +14,7 @@ import algonquin.cst2335.zhou0224.databinding.DetailsLayoutBinding;
 public class MessagesDetailsFragment extends Fragment{
     ChatMessage selected;
 
-    public MessagesDetailsFragment(ArrayList<ChatMessage> m)
+    public MessagesDetailsFragment(ChatMessage m)
     {
         selected = m;
     }
@@ -22,11 +22,13 @@ public class MessagesDetailsFragment extends Fragment{
     @Override
     public View onCreateView( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        DetailsLayoutBinding binding = DetailsLayoutBinding.inflate(inflater, container, false);
+        DetailsLayoutBinding binding = DetailsLayoutBinding.inflate(inflater);
 
-        binding.messageText.setText( selected.message);
-        binding.timeText.setText( selected.timeSent  );
-        binding.idText.setText( "ID = " + selected.id );
+        binding.showMessage.setText(selected.message);
+        binding.showTime.setText(selected.timeSent);
+        binding.showSendOrReceive.setText(Integer.toString(selected.sendOrReceive));
+        binding.showID.setText("ID = " + selected.id);
+
 
         return binding.getRoot();
     }

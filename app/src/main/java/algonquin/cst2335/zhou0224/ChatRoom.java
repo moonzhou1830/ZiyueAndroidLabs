@@ -31,12 +31,13 @@ import java.util.concurrent.Executors;
 import algonquin.cst2335.zhou0224.databinding.ActivityChatRoomBinding;
 import algonquin.cst2335.zhou0224.databinding.SentMessageBinding;
 import algonquin.cst2335.zhou0224.databinding.ReceiveMessageBinding;
-
+import algonquin.cst2335.zhou0224.ChatMessage;
+import algonquin.cst2335.zhou0224.ChatRoomViewModel;
 
 public class ChatRoom extends AppCompatActivity {
     ActivityChatRoomBinding binding;
     ChatRoomViewModel chatModel ;
-    ArrayList<ChatMessage> messages;
+    ArrayList<ChatMessage> messages = new ArrayList<>();
     MessageDatabase db;
     ChatMessageDAO myDAO;
 
@@ -45,23 +46,24 @@ public class ChatRoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
+        //messages = chatModel.messages.getValue();
+        chatModel.selectedMessage.observe(this, newMessageValue -> {
+                    MessagesDetailsFragment chatFragment = new MessagesDetailsFragment(newMessageValue);
+                   // chatFragment.displayMessage(newValue);
+                    FragmentManager fMgr = getSupportFragmentManager();
+                    //getSupportFragmentManager().beginTransaction().add(R.id.fragmentLocation, chatFragment).commit();
+                    FragmentTransaction tx = fMgr.beginTransaction();
+                    tx.replace(R.id.fragmentLocation, chatFragment);
+                    tx.addToBackStack("Back to last message");
+                    tx.commit();//// This line actually loads the fragment into the specified FrameLayout
+
+                    //getSupportFragmentManager().beginTransaction().add(R.id.messagesFrame,chatFragment).commit();
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.messagesFrame,chatFragment).commit();
+                    //getSupportFragmentManager().beginTransaction().addToBackStack("Back to last message");
+                    //tx.remove();
+                });
+
         messages = chatModel.messages.getValue();
-
-            MessagesDetailsFragment chatFragment = new MessagesDetailsFragment(messages);
-            //chatFragment.displayMessage();
-            FragmentManager fMgr = getSupportFragmentManager();
-            FragmentTransaction tx = fMgr.beginTransaction();
-            tx.replace(R.id.theMessage,chatFragment);
-            tx.addToBackStack("Back to last message");
-            tx.commit();//// This line actually loads the fragment into the specified FrameLayout
-
-            //getSupportFragmentManager().beginTransaction().add(R.id.messagesFrame,chatFragment).commit();
-            //getSupportFragmentManager().beginTransaction().replace(R.id.messagesFrame,chatFragment).commit();
-            //getSupportFragmentManager().beginTransaction().addToBackStack("Back to last message");
-            //tx.remove();
-
-        };
-
 
         //access the database:
         db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class, "MyChatMessageDatabase").build();
@@ -163,18 +165,18 @@ public class ChatRoom extends AppCompatActivity {
         public MyRowHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(click ->{
-                int position = getAbsoluteAdapterPosition();
+               /* int position = getAbsoluteAdapterPosition();
                 ChatMessage selected = messages.get(position);
 
                 chatModel.selectedMessage.postValue(selected);
 
-/*
+
                 AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
                 builder.setMessage("Do you want to delete the message:" + messageText.getText())
                        .setTitle("Question:")
                        .setNegativeButton("No",((dialog, cl) -> { }))
                        .setPositiveButton("Yes",((dialog, cl) -> {
-                   int position = getAbsoluteAdapterPosition();
+                   position = getAbsoluteAdapterPosition();
                    ChatMessage toDelete = messages.get(position);
                    Executor thread = Executors.newSingleThreadExecutor();
                            thread.execute(()-> {
@@ -200,7 +202,15 @@ public class ChatRoom extends AppCompatActivity {
                             })
                             .show();
                 }))
-                .create().show(); */
+                .create().show();
+                */
+
+                int position = getAbsoluteAdapterPosition();
+                ChatMessage selected = messages.get(position);
+
+                chatModel.selectedMessage.postValue(selected);
+
+
             });
             messageText = itemView.findViewById(R.id.theMessage);
             timeText = itemView.findViewById(R.id.theTime);
