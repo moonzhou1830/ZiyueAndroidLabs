@@ -28,6 +28,6 @@
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="67dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/send" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
