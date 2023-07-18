@@ -26,7 +26,11 @@ public class MessagesDetailsFragment extends Fragment{
 
         binding.showMessage.setText(selected.message);
         binding.showTime.setText(selected.timeSent);
-        binding.showSendOrReceive.setText(Integer.toString(selected.sendOrReceive));
+        String type;
+        if (selected.sendOrReceive ==1)
+            type = "SEND";
+        else type = "RECEIVED";
+        binding.showSendOrReceive.setText(type);
         binding.showID.setText("ID = " + selected.id);
 
 

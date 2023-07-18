@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/messageEnter"
+        android:id="@+id/textInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Enter Message"
