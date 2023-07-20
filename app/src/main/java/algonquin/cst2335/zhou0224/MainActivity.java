@@ -1,12 +1,17 @@
 package algonquin.cst2335.zhou0224;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 //import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 /**
  * This page is provided to input password,
@@ -22,10 +27,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText et = null;
     /** This holds the button at the bottom of the screen*/
     private Button btn = null;
+
+    protected Toolbar theToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        theToolbar = findViewById(R.id.myToolbar);
+        setSupportActionBar(theToolbar); //adds your toolbar
+
 
         tv = findViewById(R.id.textView);
         et = findViewById(R.id.editText);
@@ -42,6 +52,28 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText("You shall not pass!");
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String message = "";
+
+        if(item.getItemId() == R.id.id_help)
+            message = "help";
+        else if(item.getItemId() == R.id.id_reset)
+            message = "reset";
+        else if(item.getItemId() == R.id.id_download)
+            message = "download";
+
+        Toast.makeText(this,"You clicked on " + message,Toast.LENGTH_LONG).show();
+        return true;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.my_menu,menu);
+        return true;
     }
 
     /**
