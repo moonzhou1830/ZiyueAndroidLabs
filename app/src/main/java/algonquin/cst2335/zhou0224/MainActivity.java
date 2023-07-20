@@ -1,6 +1,7 @@
 package algonquin.cst2335.zhou0224;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 //import android.annotation.SuppressLint;
@@ -58,12 +59,26 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         String message = "";
 
-        if(item.getItemId() == R.id.id_help)
+        if (item.getItemId() == R.id.id_delete) {
+            message = "delete";
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this
+            );
+            builder.setMessage("Do you want to delete the message?" )
+                    .setTitle("Question:")
+                    .setNegativeButton("No",((dialog, cl) -> { }))
+                    .setPositiveButton("Yes",((dialog, cl) -> {  }));
+            builder.create().show();
+        }
+        else if(item.getItemId() == R.id.id_help)
             message = "help";
-        else if(item.getItemId() == R.id.id_reset)
-            message = "reset";
         else if(item.getItemId() == R.id.id_download)
             message = "download";
+        else if(item.getItemId() == R.id.id_reset)
+            message = "reset";
+        else if(item.getItemId() == R.id.id_about)
+            message = "about";
+        else if(item.getItemId() == R.id.id_version)
+            message = "version";
 
         Toast.makeText(this,"You clicked on " + message,Toast.LENGTH_LONG).show();
         return true;

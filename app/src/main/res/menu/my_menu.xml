@@ -15,9 +15,27 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/id_download"
+        android:id="@+id/id_delete"
         android:icon="@drawable/garbage"
         android:title="delete"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/id_about"
+        android:icon="@drawable/on"
+        android:title="about"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/id_download"
+        android:icon="@drawable/on"
+        android:title="download"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/id_version"
+        android:icon="@drawable/on"
+        android:title="version"
+        app:showAsAction="never" />
 
 </menu>
