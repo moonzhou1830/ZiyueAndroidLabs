@@ -3,6 +3,7 @@ package algonquin.cst2335.zhou0224;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
@@ -16,6 +17,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.Room;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -42,9 +44,19 @@ public class ChatRoom extends AppCompatActivity {
     ChatMessageDAO myDAO;
 
     private RecyclerView.Adapter myAdapter;
+
+    private Toolbar theToolbar;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
         //messages = chatModel.messages.getValue();
         chatModel.selectedMessage.observe(this, newMessageValue -> {
@@ -81,6 +93,9 @@ public class ChatRoom extends AppCompatActivity {
 
         binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        theToolbar = findViewById(R.id.myToolbar);
+        setSupportActionBar(theToolbar);
 
         binding.sendButton.setOnClickListener(click -> {
             int type = 1;
