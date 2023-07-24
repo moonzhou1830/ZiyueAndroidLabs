@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
@@ -18,9 +19,11 @@ import androidx.room.Room;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -47,11 +50,88 @@ public class ChatRoom extends AppCompatActivity {
 
     private Toolbar theToolbar;
 
+    private int selectedItemPosition = RecyclerView.NO_POSITION;
+
+    ChatMessage chatMessage;
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.my_menu,menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.delete){
+            deleteSelectedItem();
+        }
+        if(item.getItemId() == R.id.about){
+            CharSequence text = "Version 1.0, created by Ziyue Zhou";
+            Toast toast = Toast.makeText(this,text,Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        return true;
+    }
+
+    private void deleteSelectedItem() {
+        if (selectedItemPosition != RecyclerView.NO_POSITION) {
+            //ChatMessage selectedMessage = messages.get(selectedItemPosition);
+            // messages.remove(selectedItemPosition);
+            //  myAdapter.notifyItemRemoved(selectedItemPosition);
+
+            ChatMessage removedMessage = messages.remove(selectedItemPosition);
+            AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
+            builder.setMessage(("Do you want to delete the message: "+ removedMessage.getMessage()))
+                    .setTitle("Question: ")
+                    .setNegativeButton("No",(dialog,cl)->{})
+                    .setPositiveButton("Yes",(dialog,cl)-> {
+
+
+                        FragmentManager fMgr = getSupportFragmentManager();
+                        FragmentTransaction tx = fMgr.beginTransaction();
+
+                        // 移除之前添加的旧 Fragment
+                        Fragment oldFragment = fMgr.findFragmentById(R.id.fragmentLocation);
+                        if (oldFragment != null) {
+                            tx.remove(oldFragment);
+                            tx.commit();
+                        }
+
+                        Executor thread2 = Executors.newSingleThreadExecutor();
+                        thread2.execute(() ->
+                        {
+                            myDAO.deleteMessage(removedMessage);
+
+                            runOnUiThread(() ->
+                                    myAdapter.notifyDataSetChanged());
+                        });
+
+                        //    myAdapter.notifyItemRemoved(selectedItemPosition);
+
+                      /* Snackbar.make(, "You deleted message #"+selectedItemPosition,Snackbar.LENGTH_LONG)
+                                .setAction("Undo",clk1->{
+
+                                    messages.add(selectedItemPosition,removedMessage);
+//                                         myAdapter.notifyDataSetChanged();
+
+                                    Executor thread3 = Executors.newSingleThreadExecutor();
+                                    thread3.execute(() -> {
+                                        myDAO.insertMessage(removedMessage);
+                                        runOnUiThread(() -> myAdapter.notifyDataSetChanged());
+                                    });
+
+                            })
+                                .show(); */
+
+
+                    }) .create().show();
+
+    }
+        }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +174,8 @@ public class ChatRoom extends AppCompatActivity {
         binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        theToolbar = findViewById(R.id.myToolbar);
-        setSupportActionBar(theToolbar);
+        //theToolbar = findViewById(R.id.myToolbar);
+        setSupportActionBar(binding.myToolbar);
 
         binding.sendButton.setOnClickListener(click -> {
             int type = 1;
@@ -180,6 +260,8 @@ public class ChatRoom extends AppCompatActivity {
         public MyRowHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(click ->{
+
+
                /* int position = getAbsoluteAdapterPosition();
                 ChatMessage selected = messages.get(position);
 
@@ -222,8 +304,9 @@ public class ChatRoom extends AppCompatActivity {
 
                 int position = getAbsoluteAdapterPosition();
                 ChatMessage selected = messages.get(position);
+                selectedItemPosition = position;
 
-                chatModel.selectedMessage.postValue(selected);
+                //chatModel.selectedMessage.postValue(selected);
 
 
             });
