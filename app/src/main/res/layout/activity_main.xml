@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
 
@@ -11,46 +12,62 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.422" />
+        android:textSize="20dp"
+        android:text="Type in the name of a city:"
+        />
 
     <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
+        android:id="@+id/cityTextField"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:gravity="center_horizontal"
-        android:scrollHorizontally="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:hint="Type city name here" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:id="@+id/forecastButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:text="@string/button_message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="GET FORECAST"
+        />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/temp"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:barrierDirection="top" />
+        android:text="Temp goes here" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier3"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/maxTemp"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:barrierDirection="top" />
+        android:text="Max goes here" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/minTemp"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Min goes here" />
+
+    <TextView
+        android:id="@+id/humidity"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Humidity goes here" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/description"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description goes here" />
+
+</LinearLayout>
