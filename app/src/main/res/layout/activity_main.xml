@@ -1,73 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
-
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Type in the name of a city:"
-        />
-
-    <EditText
-        android:id="@+id/cityTextField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Type city name here" />
+        android:text="Type in the name of a city"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/forecastButton"
+        android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="GET FORECAST"
-        />
+        android:layout_marginTop="32dp"
+        android:text="Get Forecast"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Type the city name"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/temp"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Temp goes here" />
+        android:layout_marginTop="32dp"
+        android:text="Temp goes here"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/maxTemp"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Max goes here" />
+        android:layout_marginTop="32dp"
+        android:text="Max goes here"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/temp"
+        tools:layout_editor_absoluteX="-16dp" />
 
     <TextView
         android:id="@+id/minTemp"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Min goes here" />
+        android:layout_marginTop="32dp"
+        android:text="Min goes here"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/maxTemp"
+        tools:layout_editor_absoluteX="-16dp" />
 
     <TextView
         android:id="@+id/humidity"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Humidity goes here" />
+        android:layout_marginTop="32dp"
+        android:text="Humidity goes here"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/minTemp"
+        tools:layout_editor_absoluteX="-16dp" />
 
     <ImageView
         android:id="@+id/icon"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/humidity" />
 
     <TextView
         android:id="@+id/description"
-        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description goes here" />
+        android:layout_marginTop="32dp"
+        android:text="Description goes here"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/icon"
+        tools:layout_editor_absoluteX="-16dp" />
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
